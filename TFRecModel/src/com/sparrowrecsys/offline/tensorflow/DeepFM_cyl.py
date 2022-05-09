@@ -220,8 +220,6 @@ if __name__ == "__main__":
     train_dataset = get_dataset(training_samples_file_path, batch_size=batch_size)
     test_dataset = get_dataset(test_samples_file_path, batch_size=batch_size)
 
-    print("[train_dataset] \n {}".format(train_dataset))
-
     model = DeepFM()
 
     # compile the model, set loss function, optimizer and evaluation metrics
