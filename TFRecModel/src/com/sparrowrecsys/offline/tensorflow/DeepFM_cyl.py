@@ -22,7 +22,7 @@ def get_dataset(file_path):
         file_path,
         batch_size=12,
         label_name='label',
-        na_value="0",
+        # na_value="0",
         num_epochs=1,
         field_delim="\t",
         ignore_errors=True)
