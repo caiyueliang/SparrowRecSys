@@ -212,7 +212,7 @@ def DeepFM(drop_rate=0.2):
 
 
 def calc_value(accuracy, roc_auc, pr_auc):
-    return accuracy * 0.6 + roc_auc * 0.2 + pr_auc * 0.2
+    return accuracy * 0.8 + roc_auc * 0.1 + pr_auc * 0.1
 
 
 def parse_argvs():
