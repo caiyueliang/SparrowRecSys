@@ -229,12 +229,15 @@ if __name__ == "__main__":
         metrics=['accuracy', tf.keras.metrics.AUC(curve='ROC'), tf.keras.metrics.AUC(curve='PR')])
 
     # train the model
-    model.fit(train_dataset, epochs=epochs)
 
-    # evaluate the model
-    test_loss, test_accuracy, test_roc_auc, test_pr_auc = model.evaluate(test_dataset)
-    print('\n\nTest Loss {}, Test Accuracy {}, Test ROC AUC {}, Test PR AUC {}'.format(test_loss, test_accuracy,
-                                                                                       test_roc_auc, test_pr_auc))
+    for i in range(epochs):
+        model.fit(train_dataset, epochs=1)
+
+        # evaluate the model
+        test_loss, test_accuracy, test_roc_auc, test_pr_auc = model.evaluate(test_dataset)
+        print('\nTest Loss {:.4}, Test Accuracy {:.4}, Test ROC AUC {:.4}, Test PR AUC {:.4}'.format(
+            test_loss, test_accuracy, test_roc_auc, test_pr_auc))
+        
     # print some predict results
     predictions = model.predict(test_dataset)
     for prediction, goodRating in zip(predictions[:12], list(test_dataset)[0][1][:12]):
