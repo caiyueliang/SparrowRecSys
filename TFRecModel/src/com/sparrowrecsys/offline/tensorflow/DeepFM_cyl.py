@@ -155,7 +155,7 @@ def DeepFM():
     spu_emb_layer = tf.keras.layers.DenseFeatures([spu_emb_col])(inputs)
     user_emb_layer = tf.keras.layers.DenseFeatures([user_emb_col])(inputs)
     cuisines_genre_emb_layer = tf.keras.layers.DenseFeatures([cuisines_genre_emb_col])(inputs)
-    meat_type_genre_emb_layer = tf.keras.layers.DenseFeatures([meat_type_genre_ind_col])(inputs)
+    meat_type_genre_emb_layer = tf.keras.layers.DenseFeatures([meat_type_genre_emb_col])(inputs)
     gender_genre_emb_layer = tf.keras.layers.DenseFeatures([gender_genre_ind_col])(inputs)
 
     # FM part, cross different categorical feature embeddings
