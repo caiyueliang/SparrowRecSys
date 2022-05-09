@@ -54,7 +54,7 @@ def DeepFM():
         'salty': tf.keras.layers.Input(name='salty', shape=(), dtype='int32'),
         'hot': tf.keras.layers.Input(name='hot', shape=(), dtype='int32'),
         # 'cook_method': tf.keras.layers.Input(name='cook_method', shape=(), dtype='string'),
-        # 'meat_type': tf.keras.layers.Input(name='meat_type', shape=(), dtype='string'),
+        'meat_type': tf.keras.layers.Input(name='meat_type', shape=(), dtype='string'),
         # 'meat_weight': tf.keras.layers.Input(name='meat_weight', shape=(), dtype='int32'),
         # 'vagetables_weight': tf.keras.layers.Input(name='vagetables_weight', shape=(), dtype='int32'),
         # 'total_weight': tf.keras.layers.Input(name='total_weight', shape=(), dtype='int32'),
@@ -134,36 +134,37 @@ def DeepFM():
     # genre features vocabulary
     # cuisines genre embedding feature
     cuisines_vocab = ["湘菜", "川菜", "鲁菜", "浙菜", "粤菜", "闽菜", "苏菜", "徽菜", "沪菜", "东北菜", "西北菜"]
-    cuisines_genre_col = tf.feature_column.categorical_column_with_vocabulary_list(key="cuisines",
-                                                                                   vocabulary_list=cuisines_vocab)
+    cuisines_genre_col = tf.feature_column.categorical_column_with_vocabulary_list(key="cuisines", vocabulary_list=cuisines_vocab)
     cuisines_genre_emb_col = tf.feature_column.embedding_column(cuisines_genre_col, 10)
-    cuisines_genre_ind_col = tf.feature_column.indicator_column(cuisines_genre_col) # user genre indicator columns
+    cuisines_genre_ind_col = tf.feature_column.indicator_column(cuisines_genre_col)
 
-    # item genre embedding feature
+    meat_type_vocab = ["beef", "mutton", "fish", "pig", "chicken", "frog", "crab", "shrimp"]
+    meat_type_genre_col = tf.feature_column.categorical_column_with_vocabulary_list(key="meat_type", vocabulary_list=meat_type_vocab)
+    meat_type_genre_emb_col = tf.feature_column.embedding_column(meat_type_genre_col, 10)
+    meat_type_genre_ind_col = tf.feature_column.indicator_column(meat_type_genre_col)
+
     gender_genre_col = tf.feature_column.categorical_column_with_identity(key="user_gender", num_buckets=10)
-    # gender_genre_emb_col = gender_genre_col
-    # gender_genre_emb_col = tf.feature_column.embedding_column(gender_genre_col, 2)
-    gender_genre_ind_col = tf.feature_column.indicator_column(gender_genre_col)     # item genre indicator columns
+    gender_genre_ind_col = tf.feature_column.indicator_column(gender_genre_col)
 
     # ========================================================================================================
-    # fm first-order term columns: without embedding and concatenate to the output layer directly
-    # fm_first_order_columns = [movie_ind_col, user_ind_col, user_genre_ind_col, item_genre_ind_col]
-    fm_first_order_columns = [spu_ind_col, user_ind_col, cuisines_genre_ind_col, gender_genre_ind_col]
+    # The first-order term in the FM layer
+    fm_first_order_columns = [spu_ind_col, user_ind_col, cuisines_genre_ind_col, gender_genre_ind_col,
+                              meat_type_genre_ind_col]
+    fm_first_order_layer = tf.keras.layers.DenseFeatures(fm_first_order_columns)(inputs)
 
     spu_emb_layer = tf.keras.layers.DenseFeatures([spu_emb_col])(inputs)
     user_emb_layer = tf.keras.layers.DenseFeatures([user_emb_col])(inputs)
     cuisines_genre_emb_layer = tf.keras.layers.DenseFeatures([cuisines_genre_emb_col])(inputs)
-    # gender_genre_emb_layer = tf.keras.layers.DenseFeatures([gender_genre_emb_col])(inputs)
+    meat_type_genre_emb_layer = tf.keras.layers.DenseFeatures([meat_type_genre_ind_col])(inputs)
     gender_genre_emb_layer = tf.keras.layers.DenseFeatures([gender_genre_ind_col])(inputs)
-
-    # The first-order term in the FM layer
-    fm_first_order_layer = tf.keras.layers.DenseFeatures(fm_first_order_columns)(inputs)
 
     # FM part, cross different categorical feature embeddings
     product_layer_spu_user = tf.keras.layers.Dot(axes=1)([spu_emb_layer, user_emb_layer])
-    product_layer_cuisines_genre_gender_genre = tf.keras.layers.Dot(axes=1)([cuisines_genre_emb_layer, gender_genre_emb_layer])
     product_layer_spu_gender_genre = tf.keras.layers.Dot(axes=1)([spu_emb_layer, gender_genre_emb_layer])
     product_layer_user_cuisines_genre = tf.keras.layers.Dot(axes=1)([user_emb_layer, cuisines_genre_emb_layer])
+    product_layer_user_meat_type_genre = tf.keras.layers.Dot(axes=1)([user_emb_layer, meat_type_genre_emb_layer])
+    product_layer_cuisines_genre_gender_genre = tf.keras.layers.Dot(axes=1)([cuisines_genre_emb_layer, gender_genre_emb_layer])
+    product_layer_meat_type_genre_gender_genre = tf.keras.layers.Dot(axes=1)([meat_type_genre_emb_layer, gender_genre_emb_layer])
 
     # ========================================================================================================
     # deep part, MLP to generalize all input features
@@ -182,8 +183,14 @@ def DeepFM():
     # ========================================================================================================
     # concatenate fm part and deep part
     concat_layer = tf.keras.layers.concatenate(
-        [fm_first_order_layer, product_layer_spu_user, product_layer_cuisines_genre_gender_genre,
-         product_layer_spu_gender_genre, product_layer_user_cuisines_genre, deep], axis=1)
+        [fm_first_order_layer,
+         product_layer_spu_user,
+         product_layer_spu_gender_genre,
+         product_layer_user_cuisines_genre,
+         product_layer_user_meat_type_genre,
+         product_layer_cuisines_genre_gender_genre,
+         product_layer_meat_type_genre_gender_genre,
+         deep], axis=1)
     output_layer = tf.keras.layers.Dense(1, activation='sigmoid')(concat_layer)
 
     model = tf.keras.Model(inputs, output_layer)
