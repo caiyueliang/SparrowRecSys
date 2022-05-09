@@ -41,7 +41,6 @@ def DeepFM(drop_rate=0.2):
         # 'food_cook_type': tf.keras.layers.Input(name='food_cook_type', shape=(), dtype='int32'),
         # 'goods_type': tf.keras.layers.Input(name='goods_type', shape=(), dtype='int32'),
         # 'sku_valid_days': tf.keras.layers.Input(name='goods_type', shape=(), dtype='int32'),
-        # 'movieAvgRating': tf.keras.layers.Input(name='movieAvgRating', shape=(), dtype='float32'),
         #
         # 'sku_line_price': tf.keras.layers.Input(name='sku_line_price', shape=(), dtype='float32'),
         # 'sku_sale_price': tf.keras.layers.Input(name='sku_sale_price', shape=(), dtype='int32'),
@@ -212,6 +211,10 @@ def DeepFM(drop_rate=0.2):
     return model
 
 
+def calc_value(accuracy, roc_auc, pr_auc):
+    return accuracy * 0.6 + roc_auc * 0.2 + pr_auc * 0.2
+
+
 def parse_argvs():
     parser = argparse.ArgumentParser(description='[DeepFM]')
     parser.add_argument("--train_data", type=str,
@@ -254,14 +257,17 @@ if __name__ == "__main__":
         metrics=['accuracy', tf.keras.metrics.AUC(curve='ROC'), tf.keras.metrics.AUC(curve='PR')])
 
     # train the model
-
+    best_value = 0.0
     best_test_loss, best_test_accuracy, best_test_roc_auc, best_test_pr_auc = 10.0, 0.0, 0.0, 0.0
     best_model = model
+
     for i in range(epochs):
         model.fit(train_dataset, epochs=1)
         test_loss, test_accuracy, test_roc_auc, test_pr_auc = model.evaluate(test_dataset)
 
-        if best_test_accuracy < test_accuracy:
+        test_value = calc_value(accuracy=test_accuracy, roc_auc=test_roc_auc, pr_auc=test_pr_auc)
+        if best_value < test_value:
+            best_value = test_value
             best_test_loss, best_test_accuracy, best_test_roc_auc, best_test_pr_auc = \
                 test_loss, test_accuracy, test_roc_auc, test_pr_auc
             best_model = model
