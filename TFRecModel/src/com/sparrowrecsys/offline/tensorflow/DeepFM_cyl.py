@@ -2,33 +2,19 @@ import os
 import argparse
 import tensorflow as tf
 
-# /Users/qudian/open/cai/train_data/user_goods_data_2022-05-05.xlsx
-# /Users/qudian/open/cai/train_data/user_goods_data_2022-05-05.csv
-# /Users/qudian/open/cai/train_data/user_goods_data_train_2022-05-05.csv
-# /Users/qudian/open/cai/train_data/user_goods_data_test_2022-05-05.csv
-
-# # Training samples path, change to your local path
-# training_samples_file_path = tf.keras.utils.get_file(
-#     "user_goods_data_train_2022-05-05.csv",
-#     "file:///Users/qudian/open/cai/train_data/user_goods_data_train_2022-05-05.csv")
-#
-# # Test samples path, change to your local path
-# test_samples_file_path = tf.keras.utils.get_file(
-#     "user_goods_data_test_2022-05-05.csv",
-#     "file:///Users/qudian/open/cai/train_data/user_goods_data_test_2022-05-05.csv")
-
 
 # load sample as tf dataset
-def get_dataset(file_path):
+def get_dataset(file_path, batch_size=12):
     dataset = tf.data.experimental.make_csv_dataset(
         file_path,
-        batch_size=12,
+        batch_size=batch_size,
         label_name='label',
         # na_value="0",
         num_epochs=1,
         field_delim="\t",
         ignore_errors=True)
     return dataset
+
 
 def DeepFM():
     # define input for keras model
@@ -124,7 +110,6 @@ def DeepFM():
         # 'sum_valid_deal_ord_cnt_30d': tf.keras.layers.Input(name='sum_valid_deal_ord_cnt_30d', shape=(), dtype='int32'),
     }
 
-
     # ========================================================================================================
     # movie id embedding feature
     spu_vocab = ["农家小炒肉", "菠萝咕咾肉", "攸县香干炒肉", "回锅肉", "宫保鸡丁", "水煮肉片", "梅菜扣肉", "香辣紫苏牛蛙", "豆豉辣椒蒸排骨",
@@ -145,7 +130,6 @@ def DeepFM():
     user_emb_col = tf.feature_column.embedding_column(user_col, 10)
     user_ind_col = tf.feature_column.indicator_column(user_col)         # user id indicator columns
 
-
     # ========================================================================================================
     # genre features vocabulary
     # cuisines genre embedding feature
@@ -165,7 +149,6 @@ def DeepFM():
     # fm first-order term columns: without embedding and concatenate to the output layer directly
     # fm_first_order_columns = [movie_ind_col, user_ind_col, user_genre_ind_col, item_genre_ind_col]
     fm_first_order_columns = [spu_ind_col, user_ind_col, cuisines_genre_ind_col, gender_genre_ind_col]
-
 
     spu_emb_layer = tf.keras.layers.DenseFeatures([spu_emb_col])(inputs)
     user_emb_layer = tf.keras.layers.DenseFeatures([user_emb_col])(inputs)
@@ -240,6 +223,7 @@ def parse_argvs():
                         default="file:///data1/caiyueliang/data/user_goods_data_train_2022-05-05.csv")
     parser.add_argument("--test_data", type=str,
                         default="file:///data1/caiyueliang/data/user_goods_data_test_2022-05-05.csv")
+    parser.add_argument("--batch_size", type=int, default=48)
     args = parser.parse_args()
     print('[input params] {}'.format(args))
 
@@ -250,6 +234,7 @@ if __name__ == "__main__":
     parser, args = parse_argvs()
     train_data = args.train_data
     test_data = args.test_data
+    batch_size = args.batch_size
 
     # Training samples path, change to your local path
     training_samples_file_path = tf.keras.utils.get_file(train_data.split("/")[-1], train_data)
@@ -257,8 +242,8 @@ if __name__ == "__main__":
     test_samples_file_path = tf.keras.utils.get_file(test_data.split("/")[-1], test_data)
 
     # split as test dataset and training dataset
-    train_dataset = get_dataset(training_samples_file_path)
-    test_dataset = get_dataset(test_samples_file_path)
+    train_dataset = get_dataset(training_samples_file_path, batch_size=batch_size)
+    test_dataset = get_dataset(test_samples_file_path, batch_size=batch_size)
 
     print("[train_dataset] \n {}".format(train_dataset))
 
