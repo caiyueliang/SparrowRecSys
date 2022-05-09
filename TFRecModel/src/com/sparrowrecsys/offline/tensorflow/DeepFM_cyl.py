@@ -266,8 +266,8 @@ if __name__ == "__main__":
                 test_loss, test_accuracy, test_roc_auc, test_pr_auc
             best_model = model
 
-    print(" ======================================================================== ")
-    print('\n[BEST] Test Loss {:.4}, Test Accuracy {:.4}, Test ROC AUC {:.4}, Test PR AUC {:.4}'.format(
+    print("\n ======================================================================== ")
+    print('[BEST] Test Loss {:.4}, Test Accuracy {:.4}, Test ROC AUC {:.4}, Test PR AUC {:.4}'.format(
         best_test_loss, best_test_accuracy, best_test_roc_auc, best_test_pr_auc))
     # print some predict results
     predictions = best_model.predict(test_dataset)
