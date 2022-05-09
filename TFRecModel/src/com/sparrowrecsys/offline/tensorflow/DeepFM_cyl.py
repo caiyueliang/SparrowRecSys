@@ -64,77 +64,77 @@ inputs = {
     'spu_name': tf.keras.layers.Input(name='spu_name', shape=(), dtype='string'),
 
     # 商品特征
-    'dinner_time_type': tf.keras.layers.Input(name='dinner_time_type', shape=(), dtype='int32'),
-    'food_cook_type': tf.keras.layers.Input(name='food_cook_type', shape=(), dtype='int32'),
-    'goods_type': tf.keras.layers.Input(name='goods_type', shape=(), dtype='int32'),
-    'sku_valid_days': tf.keras.layers.Input(name='goods_type', shape=(), dtype='int32'),
-    'movieAvgRating': tf.keras.layers.Input(name='movieAvgRating', shape=(), dtype='float32'),
-
-    'sku_line_price': tf.keras.layers.Input(name='sku_line_price', shape=(), dtype='float32'),
-    'sku_sale_price': tf.keras.layers.Input(name='sku_sale_price', shape=(), dtype='int32'),
-    'sku_point_cnt': tf.keras.layers.Input(name='sku_point_cnt', shape=(), dtype='float32'),
-    'spu_category': tf.keras.layers.Input(name='spu_category', shape=(), dtype='int32'),
-    'group_addition_info': tf.keras.layers.Input(name='group_addition_info', shape=(), dtype='int32'),
+    # 'dinner_time_type': tf.keras.layers.Input(name='dinner_time_type', shape=(), dtype='int32'),
+    # 'food_cook_type': tf.keras.layers.Input(name='food_cook_type', shape=(), dtype='int32'),
+    # 'goods_type': tf.keras.layers.Input(name='goods_type', shape=(), dtype='int32'),
+    # 'sku_valid_days': tf.keras.layers.Input(name='goods_type', shape=(), dtype='int32'),
+    # 'movieAvgRating': tf.keras.layers.Input(name='movieAvgRating', shape=(), dtype='float32'),
+    #
+    # 'sku_line_price': tf.keras.layers.Input(name='sku_line_price', shape=(), dtype='float32'),
+    # 'sku_sale_price': tf.keras.layers.Input(name='sku_sale_price', shape=(), dtype='int32'),
+    # 'sku_point_cnt': tf.keras.layers.Input(name='sku_point_cnt', shape=(), dtype='float32'),
+    # 'spu_category': tf.keras.layers.Input(name='spu_category', shape=(), dtype='int32'),
+    # 'group_addition_info': tf.keras.layers.Input(name='group_addition_info', shape=(), dtype='int32'),
 
     'sour': tf.keras.layers.Input(name='sour', shape=(), dtype='int32'),
     'sweet': tf.keras.layers.Input(name='sweet', shape=(), dtype='int32'),
     'salty': tf.keras.layers.Input(name='salty', shape=(), dtype='int32'),
     'hot': tf.keras.layers.Input(name='hot', shape=(), dtype='int32'),
-    'cook_method': tf.keras.layers.Input(name='cook_method', shape=(), dtype='string'),
-    'meat_type': tf.keras.layers.Input(name='meat_type', shape=(), dtype='string'),
-    'meat_weight': tf.keras.layers.Input(name='meat_weight', shape=(), dtype='int32'),
-    'vagetables_weight': tf.keras.layers.Input(name='vagetables_weight', shape=(), dtype='int32'),
-    'total_weight': tf.keras.layers.Input(name='total_weight', shape=(), dtype='int32'),
-    'food_type': tf.keras.layers.Input(name='food_type', shape=(), dtype='int32'),
-    'is_soup': tf.keras.layers.Input(name='is_soup', shape=(), dtype='int32'),
+    # 'cook_method': tf.keras.layers.Input(name='cook_method', shape=(), dtype='string'),
+    # 'meat_type': tf.keras.layers.Input(name='meat_type', shape=(), dtype='string'),
+    # 'meat_weight': tf.keras.layers.Input(name='meat_weight', shape=(), dtype='int32'),
+    # 'vagetables_weight': tf.keras.layers.Input(name='vagetables_weight', shape=(), dtype='int32'),
+    # 'total_weight': tf.keras.layers.Input(name='total_weight', shape=(), dtype='int32'),
+    # 'food_type': tf.keras.layers.Input(name='food_type', shape=(), dtype='int32'),
+    # 'is_soup': tf.keras.layers.Input(name='is_soup', shape=(), dtype='int32'),
     'cuisines': tf.keras.layers.Input(name='cuisines', shape=(), dtype='string'),
 
     # 用户特征
     'user_gender': tf.keras.layers.Input(name='user_gender', shape=(), dtype='int32'),
     'user_status': tf.keras.layers.Input(name='user_status', shape=(), dtype='int32'),
-    'register_type': tf.keras.layers.Input(name='register_type', shape=(), dtype='int32'),
-    'spr_scheme_id': tf.keras.layers.Input(name='spr_scheme_id', shape=(), dtype='int32'),
-    'spr_batch_id': tf.keras.layers.Input(name='spr_batch_id', shape=(), dtype='int32'),
-    'invite_user_id': tf.keras.layers.Input(name='invite_user_id', shape=(), dtype='int32'),
-    'invite_type': tf.keras.layers.Input(name='invite_type', shape=(), dtype='int32'),
-    'register_scene': tf.keras.layers.Input(name='register_scene', shape=(), dtype='int32'),
-    'is_head_flag': tf.keras.layers.Input(name='is_head_flag', shape=(), dtype='int32'),
-    'register_source': tf.keras.layers.Input(name='register_source', shape=(), dtype='int32'),
-    'ip_city_name': tf.keras.layers.Input(name='ip_city_name', shape=(), dtype='string'),
-    'mobile_city_name': tf.keras.layers.Input(name='mobile_city_name', shape=(), dtype='string'),
-    'register_os': tf.keras.layers.Input(name='register_os', shape=(), dtype='string'),
-    # 'register_date': tf.keras.layers.Input(name='register_date', shape=(), dtype='string'),
-    'reg_gap_days': tf.keras.layers.Input(name='reg_gap_days', shape=(), dtype='int32'),
-    # 'reg_channel': tf.keras.layers.Input(name='reg_channel', shape=(), dtype='string'),
-    'sum_invite_user_cnt_his': tf.keras.layers.Input(name='sum_invite_user_cnt_his', shape=(), dtype='int32'),
-    'sum_invite_valid_deal_user_cnt_his': tf.keras.layers.Input(name='sum_invite_valid_deal_user_cnt_his', shape=(), dtype='int32'),
-    'last_receive_city_name': tf.keras.layers.Input(name='last_receive_city_name', shape=(), dtype='string'),
-    'last_receive_region_name': tf.keras.layers.Input(name='last_receive_region_name', shape=(), dtype='string'),
-    'last_valid_order_create_date': tf.keras.layers.Input(name='last_valid_order_create_date', shape=(), dtype='string'),
-    'last_valid_order_gap_days': tf.keras.layers.Input(name='last_valid_order_gap_days', shape=(), dtype='int32'),
-    'sum_valid_deal_ord_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_ord_cnt_his', shape=(), dtype='int32'),
-    'sum_valid_deal_general_ord_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_general_ord_cnt_his', shape=(), dtype='int32'),
-    'sum_valid_deal_pin_ord_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_pin_ord_cnt_his', shape=(), dtype='int32'),
-    'sum_valid_deal_zd_ord_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_zd_ord_cnt_his', shape=(), dtype='int32'),
-    'sum_valid_deal_amt_7d': tf.keras.layers.Input(name='sum_valid_deal_amt_7d', shape=(), dtype='float32'),
-    'sum_valid_deal_amt_30d': tf.keras.layers.Input(name='sum_valid_deal_amt_30d', shape=(), dtype='float32'),
-    'sum_valid_deal_amt_his': tf.keras.layers.Input(name='sum_valid_deal_amt_his', shape=(), dtype='float32'),
-    'sum_valid_deal_sku_cnt_7d': tf.keras.layers.Input(name='sum_valid_deal_sku_cnt_7d', shape=(), dtype='int32'),
-    'sum_valid_deal_sku_cnt_30d': tf.keras.layers.Input(name='sum_valid_deal_sku_cnt_30d', shape=(), dtype='int32'),
-    'sum_valid_deal_sku_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_sku_cnt_his', shape=(), dtype='int32'),
-    'sum_valid_deal_days_7d': tf.keras.layers.Input(name='sum_valid_deal_days_7d', shape=(), dtype='int32'),
-    'sum_valid_deal_days_30d': tf.keras.layers.Input(name='sum_valid_deal_days_30d', shape=(), dtype='int32'),
-    'sum_valid_deal_days_his': tf.keras.layers.Input(name='sum_valid_deal_days_his', shape=(), dtype='int32'),
-    'valid_deal_most_spu_name': tf.keras.layers.Input(name='valid_deal_most_spu_name', shape=(), dtype='string'),
-    'receive_time_range_top': tf.keras.layers.Input(name='receive_time_range_top', shape=(), dtype='string'),
-    'order_hour_top': tf.keras.layers.Input(name='order_hour_top', shape=(), dtype='string'),
-    'order_hour_top2': tf.keras.layers.Input(name='order_hour_top2', shape=(), dtype='string'),
-    'order_hour_top3': tf.keras.layers.Input(name='order_hour_top3', shape=(), dtype='string'),
-    'valid_deal_spu_ctgy_top': tf.keras.layers.Input(name='valid_deal_spu_ctgy_top', shape=(), dtype='string'),
-    'valid_deal_spu_ctgy_top2': tf.keras.layers.Input(name='valid_deal_spu_ctgy_top2', shape=(), dtype='string'),
-    'valid_deal_spu_ctgy_top3': tf.keras.layers.Input(name='valid_deal_spu_ctgy_top3', shape=(), dtype='string'),
-    'sum_valid_deal_ord_cnt_7d': tf.keras.layers.Input(name='sum_valid_deal_ord_cnt_7d', shape=(), dtype='int32'),
-    'sum_valid_deal_ord_cnt_30d': tf.keras.layers.Input(name='sum_valid_deal_ord_cnt_30d', shape=(), dtype='int32'),
+    # 'register_type': tf.keras.layers.Input(name='register_type', shape=(), dtype='int32'),
+    # 'spr_scheme_id': tf.keras.layers.Input(name='spr_scheme_id', shape=(), dtype='int32'),
+    # 'spr_batch_id': tf.keras.layers.Input(name='spr_batch_id', shape=(), dtype='int32'),
+    # 'invite_user_id': tf.keras.layers.Input(name='invite_user_id', shape=(), dtype='int32'),
+    # 'invite_type': tf.keras.layers.Input(name='invite_type', shape=(), dtype='int32'),
+    # 'register_scene': tf.keras.layers.Input(name='register_scene', shape=(), dtype='int32'),
+    # 'is_head_flag': tf.keras.layers.Input(name='is_head_flag', shape=(), dtype='int32'),
+    # 'register_source': tf.keras.layers.Input(name='register_source', shape=(), dtype='int32'),
+    # 'ip_city_name': tf.keras.layers.Input(name='ip_city_name', shape=(), dtype='string'),
+    # 'mobile_city_name': tf.keras.layers.Input(name='mobile_city_name', shape=(), dtype='string'),
+    # 'register_os': tf.keras.layers.Input(name='register_os', shape=(), dtype='string'),
+    # # 'register_date': tf.keras.layers.Input(name='register_date', shape=(), dtype='string'),
+    # 'reg_gap_days': tf.keras.layers.Input(name='reg_gap_days', shape=(), dtype='int32'),
+    # # 'reg_channel': tf.keras.layers.Input(name='reg_channel', shape=(), dtype='string'),
+    # 'sum_invite_user_cnt_his': tf.keras.layers.Input(name='sum_invite_user_cnt_his', shape=(), dtype='int32'),
+    # 'sum_invite_valid_deal_user_cnt_his': tf.keras.layers.Input(name='sum_invite_valid_deal_user_cnt_his', shape=(), dtype='int32'),
+    # 'last_receive_city_name': tf.keras.layers.Input(name='last_receive_city_name', shape=(), dtype='string'),
+    # 'last_receive_region_name': tf.keras.layers.Input(name='last_receive_region_name', shape=(), dtype='string'),
+    # 'last_valid_order_create_date': tf.keras.layers.Input(name='last_valid_order_create_date', shape=(), dtype='string'),
+    # 'last_valid_order_gap_days': tf.keras.layers.Input(name='last_valid_order_gap_days', shape=(), dtype='int32'),
+    # 'sum_valid_deal_ord_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_ord_cnt_his', shape=(), dtype='int32'),
+    # 'sum_valid_deal_general_ord_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_general_ord_cnt_his', shape=(), dtype='int32'),
+    # 'sum_valid_deal_pin_ord_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_pin_ord_cnt_his', shape=(), dtype='int32'),
+    # 'sum_valid_deal_zd_ord_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_zd_ord_cnt_his', shape=(), dtype='int32'),
+    # 'sum_valid_deal_amt_7d': tf.keras.layers.Input(name='sum_valid_deal_amt_7d', shape=(), dtype='float32'),
+    # 'sum_valid_deal_amt_30d': tf.keras.layers.Input(name='sum_valid_deal_amt_30d', shape=(), dtype='float32'),
+    # 'sum_valid_deal_amt_his': tf.keras.layers.Input(name='sum_valid_deal_amt_his', shape=(), dtype='float32'),
+    # 'sum_valid_deal_sku_cnt_7d': tf.keras.layers.Input(name='sum_valid_deal_sku_cnt_7d', shape=(), dtype='int32'),
+    # 'sum_valid_deal_sku_cnt_30d': tf.keras.layers.Input(name='sum_valid_deal_sku_cnt_30d', shape=(), dtype='int32'),
+    # 'sum_valid_deal_sku_cnt_his': tf.keras.layers.Input(name='sum_valid_deal_sku_cnt_his', shape=(), dtype='int32'),
+    # 'sum_valid_deal_days_7d': tf.keras.layers.Input(name='sum_valid_deal_days_7d', shape=(), dtype='int32'),
+    # 'sum_valid_deal_days_30d': tf.keras.layers.Input(name='sum_valid_deal_days_30d', shape=(), dtype='int32'),
+    # 'sum_valid_deal_days_his': tf.keras.layers.Input(name='sum_valid_deal_days_his', shape=(), dtype='int32'),
+    # 'valid_deal_most_spu_name': tf.keras.layers.Input(name='valid_deal_most_spu_name', shape=(), dtype='string'),
+    # 'receive_time_range_top': tf.keras.layers.Input(name='receive_time_range_top', shape=(), dtype='string'),
+    # 'order_hour_top': tf.keras.layers.Input(name='order_hour_top', shape=(), dtype='string'),
+    # 'order_hour_top2': tf.keras.layers.Input(name='order_hour_top2', shape=(), dtype='string'),
+    # 'order_hour_top3': tf.keras.layers.Input(name='order_hour_top3', shape=(), dtype='string'),
+    # 'valid_deal_spu_ctgy_top': tf.keras.layers.Input(name='valid_deal_spu_ctgy_top', shape=(), dtype='string'),
+    # 'valid_deal_spu_ctgy_top2': tf.keras.layers.Input(name='valid_deal_spu_ctgy_top2', shape=(), dtype='string'),
+    # 'valid_deal_spu_ctgy_top3': tf.keras.layers.Input(name='valid_deal_spu_ctgy_top3', shape=(), dtype='string'),
+    # 'sum_valid_deal_ord_cnt_7d': tf.keras.layers.Input(name='sum_valid_deal_ord_cnt_7d', shape=(), dtype='int32'),
+    # 'sum_valid_deal_ord_cnt_30d': tf.keras.layers.Input(name='sum_valid_deal_ord_cnt_30d', shape=(), dtype='int32'),
 }
 
 # inputs = {
@@ -172,72 +172,70 @@ inputs = {
 # user_ind_col = tf.feature_column.indicator_column(user_col) # user id indicator columns
 
 # movie id embedding feature
-movie_col = tf.feature_column.categorical_column_with_identity(key='spu_name', num_buckets=100)
-movie_emb_col = tf.feature_column.embedding_column(movie_col, 10)
-movie_ind_col = tf.feature_column.indicator_column(movie_col) # movid id indicator columns
+spu_col = tf.feature_column.categorical_column_with_identity(key='spu_name', num_buckets=100)
+spu_emb_col = tf.feature_column.embedding_column(spu_col, 10)
+spu_ind_col = tf.feature_column.indicator_column(spu_col)       # spu id indicator columns
 
 # user id embedding feature
 user_col = tf.feature_column.categorical_column_with_identity(key='user_id', num_buckets=312000)
 user_emb_col = tf.feature_column.embedding_column(user_col, 10)
-user_ind_col = tf.feature_column.indicator_column(user_col) # user id indicator columns
+user_ind_col = tf.feature_column.indicator_column(user_col)         # user id indicator columns
 
 
+# ========================================================================================================
 # genre features vocabulary
-genre_vocab = ['Film-Noir', 'Action', 'Adventure', 'Horror', 'Romance', 'War', 'Comedy', 'Western', 'Documentary',
-               'Sci-Fi', 'Drama', 'Thriller',
-               'Crime', 'Fantasy', 'Animation', 'IMAX', 'Mystery', 'Children', 'Musical']
+# cuisines genre embedding feature
+cuisines_vocab = ["湘菜", "川菜", "鲁菜", "浙菜", "粤菜", "闽菜", "苏菜", "徽菜", "沪菜", "东北菜", "西北菜"]
+cuisines_genre_col = tf.feature_column.categorical_column_with_vocabulary_list(key="cuisines",
+                                                                               vocabulary_list=cuisines_vocab)
+cuisines_genre_emb_col = tf.feature_column.embedding_column(cuisines_genre_col, 10)
+cuisines_genre_ind_col = tf.feature_column.indicator_column(cuisines_genre_col) # user genre indicator columns
 
-# ========================================================================================================
-# user genre embedding feature
-user_genre_col = tf.feature_column.categorical_column_with_vocabulary_list(key="userGenre1",
-                                                                           vocabulary_list=genre_vocab)
-user_genre_emb_col = tf.feature_column.embedding_column(user_genre_col, 10)
-user_genre_ind_col = tf.feature_column.indicator_column(user_genre_col) # user genre indicator columns
-
-# ========================================================================================================
 # item genre embedding feature
-item_genre_col = tf.feature_column.categorical_column_with_vocabulary_list(key="movieGenre1",
-                                                                           vocabulary_list=genre_vocab)
-item_genre_emb_col = tf.feature_column.embedding_column(item_genre_col, 10)
-item_genre_ind_col = tf.feature_column.indicator_column(item_genre_col) # item genre indicator columns
+gender_genre_col = tf.feature_column.categorical_column_with_identity(key="user_gender", vocabulary_list=2)
+gender_genre_emb_col = gender_genre_col
+gender_genre_ind_col = tf.feature_column.indicator_column(gender_genre_col)     # item genre indicator columns
 
 # ========================================================================================================
 # fm first-order term columns: without embedding and concatenate to the output layer directly
-fm_first_order_columns = [movie_ind_col, user_ind_col, user_genre_ind_col, item_genre_ind_col]
+# fm_first_order_columns = [movie_ind_col, user_ind_col, user_genre_ind_col, item_genre_ind_col]
+fm_first_order_columns = [spu_col, user_ind_col, cuisines_genre_ind_col, gender_genre_ind_col]
 
-deep_feature_columns = [tf.feature_column.numeric_column('releaseYear'),
-                        tf.feature_column.numeric_column('movieRatingCount'),
-                        tf.feature_column.numeric_column('movieAvgRating'),
-                        tf.feature_column.numeric_column('movieRatingStddev'),
-                        tf.feature_column.numeric_column('userRatingCount'),
-                        tf.feature_column.numeric_column('userAvgRating'),
-                        tf.feature_column.numeric_column('userRatingStddev'),
-                        movie_emb_col,
-                        user_emb_col]
 
-item_emb_layer = tf.keras.layers.DenseFeatures([movie_emb_col])(inputs)
+spu_emb_layer = tf.keras.layers.DenseFeatures([spu_emb_col])(inputs)
 user_emb_layer = tf.keras.layers.DenseFeatures([user_emb_col])(inputs)
-item_genre_emb_layer = tf.keras.layers.DenseFeatures([item_genre_emb_col])(inputs)
-user_genre_emb_layer = tf.keras.layers.DenseFeatures([user_genre_emb_col])(inputs)
+cuisines_genre_emb_layer = tf.keras.layers.DenseFeatures([cuisines_genre_emb_col])(inputs)
+gender_genre_emb_layer = tf.keras.layers.DenseFeatures([gender_genre_emb_col])(inputs)
+
 
 # The first-order term in the FM layer
 fm_first_order_layer = tf.keras.layers.DenseFeatures(fm_first_order_columns)(inputs)
 
 # FM part, cross different categorical feature embeddings
-product_layer_item_user = tf.keras.layers.Dot(axes=1)([item_emb_layer, user_emb_layer])
-product_layer_item_genre_user_genre = tf.keras.layers.Dot(axes=1)([item_genre_emb_layer, user_genre_emb_layer])
-product_layer_item_genre_user = tf.keras.layers.Dot(axes=1)([item_genre_emb_layer, user_emb_layer])
-product_layer_user_genre_item = tf.keras.layers.Dot(axes=1)([item_emb_layer, user_genre_emb_layer])
+product_layer_spu_user = tf.keras.layers.Dot(axes=1)([spu_emb_layer, user_emb_layer])
+product_layer_cuisines_genre_gender_genre = tf.keras.layers.Dot(axes=1)([cuisines_genre_emb_layer, gender_genre_emb_layer])
+product_layer_spu_gender_genre = tf.keras.layers.Dot(axes=1)([spu_emb_layer, gender_genre_emb_layer])
+product_layer_user_cuisines_genre = tf.keras.layers.Dot(axes=1)([user_emb_layer, cuisines_genre_emb_layer])
 
+# ========================================================================================================
 # deep part, MLP to generalize all input features
+
+deep_feature_columns = [tf.feature_column.numeric_column('sour'),
+                        tf.feature_column.numeric_column('sweet'),
+                        tf.feature_column.numeric_column('salty'),
+                        tf.feature_column.numeric_column('hot'),
+                        spu_emb_col,
+                        user_emb_col]
+
 deep = tf.keras.layers.DenseFeatures(deep_feature_columns)(inputs)
 deep = tf.keras.layers.Dense(64, activation='relu')(deep)
 deep = tf.keras.layers.Dense(64, activation='relu')(deep)
 
 # ========================================================================================================
 # concatenate fm part and deep part
-concat_layer = tf.keras.layers.concatenate([fm_first_order_layer, product_layer_item_user, product_layer_item_genre_user_genre,
-                                            product_layer_item_genre_user, product_layer_user_genre_item, deep], axis=1)
+concat_layer = tf.keras.layers.concatenate(
+    [fm_first_order_layer, product_layer_spu_user, product_layer_cuisines_genre_gender_genre,
+     product_layer_spu_gender_genre, product_layer_user_cuisines_genre, deep], axis=1)
 output_layer = tf.keras.layers.Dense(1, activation='sigmoid')(concat_layer)
 
 # ========================================================================================================
