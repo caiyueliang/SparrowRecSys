@@ -177,7 +177,9 @@ def DeepFM():
                             user_emb_col]
 
     deep = tf.keras.layers.DenseFeatures(deep_feature_columns)(inputs)
+    deep = tf.keras.layers.Dropout(0.2)(deep)
     deep = tf.keras.layers.Dense(64, activation='relu')(deep)
+    deep = tf.keras.layers.Dropout(0.2)(deep)
     deep = tf.keras.layers.Dense(64, activation='relu')(deep)
 
     # ========================================================================================================
