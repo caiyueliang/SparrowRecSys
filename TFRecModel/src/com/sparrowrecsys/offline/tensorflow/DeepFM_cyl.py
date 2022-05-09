@@ -177,7 +177,7 @@ def DeepFM(drop_rate=0.2):
     product_layer_user_meat_type_genre = tf.keras.layers.Dropout(drop_rate)(product_layer_user_meat_type_genre)
     product_layer_cuisines_genre_gender_genre = tf.keras.layers.Dropout(drop_rate)(product_layer_cuisines_genre_gender_genre)
     product_layer_meat_type_genre_gender_genre = tf.keras.layers.Dropout(drop_rate)(product_layer_meat_type_genre_gender_genre)
-    
+
     # ========================================================================================================
     # deep part, MLP to generalize all input features
 
@@ -220,6 +220,8 @@ def parse_argvs():
                         default="file:///data1/caiyueliang/data/user_goods_data_test_2022-05-05.csv")
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--epochs", type=int, default=5)
+    parser.add_argument("--drop_rate", type=float, default=0.2)
+
     args = parser.parse_args()
     print('[input params] {}'.format(args))
 
@@ -232,6 +234,7 @@ if __name__ == "__main__":
     test_data = args.test_data
     batch_size = args.batch_size
     epochs = args.epochs
+    drop_rate = args.drop_rate
 
     # Training samples path, change to your local path
     training_samples_file_path = tf.keras.utils.get_file(train_data.split("/")[-1], train_data)
@@ -242,7 +245,7 @@ if __name__ == "__main__":
     train_dataset = get_dataset(training_samples_file_path, batch_size=batch_size)
     test_dataset = get_dataset(test_samples_file_path, batch_size=batch_size)
 
-    model = DeepFM()
+    model = DeepFM(drop_rate=drop_rate)
 
     # compile the model, set loss function, optimizer and evaluation metrics
     model.compile(
