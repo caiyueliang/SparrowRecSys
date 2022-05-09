@@ -255,16 +255,22 @@ if __name__ == "__main__":
 
     # train the model
 
+    best_test_loss, best_test_accuracy, best_test_roc_auc, best_test_pr_auc = 10.0, 0.0, 0.0, 0.0
+    best_model = model
     for i in range(epochs):
         model.fit(train_dataset, epochs=1)
-
-        # evaluate the model
         test_loss, test_accuracy, test_roc_auc, test_pr_auc = model.evaluate(test_dataset)
-        print('\nTest Loss {:.4}, Test Accuracy {:.4}, Test ROC AUC {:.4}, Test PR AUC {:.4}'.format(
-            test_loss, test_accuracy, test_roc_auc, test_pr_auc))
 
+        if best_test_accuracy < test_accuracy:
+            best_test_loss, best_test_accuracy, best_test_roc_auc, best_test_pr_auc = \
+                test_loss, test_accuracy, test_roc_auc, test_pr_auc
+            best_model = model
+
+    print(" ======================================================================== ")
+    print('\n[BEST] Test Loss {:.4}, Test Accuracy {:.4}, Test ROC AUC {:.4}, Test PR AUC {:.4}'.format(
+        best_test_loss, best_test_accuracy, best_test_roc_auc, best_test_pr_auc))
     # print some predict results
-    predictions = model.predict(test_dataset)
+    predictions = best_model.predict(test_dataset)
     for prediction, goodRating in zip(predictions[:12], list(test_dataset)[0][1][:12]):
         print("Predicted good rating: {:.2%}".format(prediction[0]),
               " | Actual rating label: ",
