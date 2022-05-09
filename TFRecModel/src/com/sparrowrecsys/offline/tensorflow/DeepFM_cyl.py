@@ -1,14 +1,5 @@
 import tensorflow as tf
 
-# # Training samples path, change to your local path
-# training_samples_file_path = tf.keras.utils.get_file("trainingSamples.csv",
-#                                                      "file:///Users/qudian/qudian-ml/SparrowRecSys/src/main"
-#                                                      "/resources/webroot/sampledata/trainingSamples.csv")
-# # Test samples path, change to your local path
-# test_samples_file_path = tf.keras.utils.get_file("testSamples.csv",
-#                                                  "file:///Users/qudian/qudian-ml/SparrowRecSys/src/main"
-#                                                  "/resources/webroot/sampledata/testSamples.csv")
-
 # /Users/qudian/open/cai/train_data/user_goods_data_2022-05-05.xlsx
 # /Users/qudian/open/cai/train_data/user_goods_data_2022-05-05.csv
 # /Users/qudian/open/cai/train_data/user_goods_data_train_2022-05-05.csv
@@ -137,42 +128,19 @@ inputs = {
     # 'sum_valid_deal_ord_cnt_30d': tf.keras.layers.Input(name='sum_valid_deal_ord_cnt_30d', shape=(), dtype='int32'),
 }
 
-# inputs = {
-#     'movieAvgRating': tf.keras.layers.Input(name='movieAvgRating', shape=(), dtype='float32'),
-#     'movieRatingStddev': tf.keras.layers.Input(name='movieRatingStddev', shape=(), dtype='float32'),
-#     'movieRatingCount': tf.keras.layers.Input(name='movieRatingCount', shape=(), dtype='int32'),
-#     'userAvgRating': tf.keras.layers.Input(name='userAvgRating', shape=(), dtype='float32'),
-#     'userRatingStddev': tf.keras.layers.Input(name='userRatingStddev', shape=(), dtype='float32'),
-#     'userRatingCount': tf.keras.layers.Input(name='userRatingCount', shape=(), dtype='int32'),
-#     'releaseYear': tf.keras.layers.Input(name='releaseYear', shape=(), dtype='int32'),
-#
-#     'movieId': tf.keras.layers.Input(name='movieId', shape=(), dtype='int32'),
-#     'userId': tf.keras.layers.Input(name='userId', shape=(), dtype='int32'),
-#     'userRatedMovie1': tf.keras.layers.Input(name='userRatedMovie1', shape=(), dtype='int32'),
-#
-#     'userGenre1': tf.keras.layers.Input(name='userGenre1', shape=(), dtype='string'),
-#     'userGenre2': tf.keras.layers.Input(name='userGenre2', shape=(), dtype='string'),
-#     'userGenre3': tf.keras.layers.Input(name='userGenre3', shape=(), dtype='string'),
-#     'userGenre4': tf.keras.layers.Input(name='userGenre4', shape=(), dtype='string'),
-#     'userGenre5': tf.keras.layers.Input(name='userGenre5', shape=(), dtype='string'),
-#
-#     'movieGenre1': tf.keras.layers.Input(name='movieGenre1', shape=(), dtype='string'),
-#     'movieGenre2': tf.keras.layers.Input(name='movieGenre2', shape=(), dtype='string'),
-#     'movieGenre3': tf.keras.layers.Input(name='movieGenre3', shape=(), dtype='string'),
-# }
 
-# # movie id embedding feature
-# movie_col = tf.feature_column.categorical_column_with_identity(key='movieId', num_buckets=1001)
-# movie_emb_col = tf.feature_column.embedding_column(movie_col, 10)
-# movie_ind_col = tf.feature_column.indicator_column(movie_col) # movid id indicator columns
-#
-# # user id embedding feature
-# user_col = tf.feature_column.categorical_column_with_identity(key='userId', num_buckets=30001)
-# user_emb_col = tf.feature_column.embedding_column(user_col, 10)
-# user_ind_col = tf.feature_column.indicator_column(user_col) # user id indicator columns
-
+# ========================================================================================================
 # movie id embedding feature
-spu_col = tf.feature_column.categorical_column_with_identity(key='spu_name', num_buckets=100)
+spu_vocab = ["农家小炒肉", "菠萝咕咾肉", "攸县香干炒肉", "回锅肉", "宫保鸡丁", "水煮肉片", "梅菜扣肉", "香辣紫苏牛蛙", "豆豉辣椒蒸排骨",
+             "酸菜鱼", "水煮鱼", "青椒肉丝", "麻婆豆腐", "小鸡炖蘑菇", "羊蝎子", "西芹百合炒腰果", "孜然牛肉", "干锅肥肠", "京酱肉丝",
+             "肉末酸豆角", "藜蒿炒腊肉", "酸辣土豆丝", "紫苏煎黄瓜", "清炒莴笋丝", "肉末煎豆腐", "糖醋排骨", "红烧猪蹄", "港式清汤腩",
+             "贝勒爷炒烤羊肉", "土匪猪肝", "糖醋里脊", "蟹黄豆腐", "本帮红烧肉", "芥蓝炒牛肉", "台式三杯鸡", "芥菜高汤煮肉片",
+             "湘西外婆菜", "香菜炒牛肉", "干锅花菜", "酸萝卜炒肚丝", "辣白菜炒五花肉", "猪肉炖粉条", "新疆大盘鸡", "毛血旺", "麻辣香锅",
+             "水煮牛肉", "小炒黄牛肉", "广式猪肚鸡", "韭黄炒鸡丝", "爆炒卤猪耳", "井冈烟笋炒腊肉", "辣炒鸡胗", "酸汤肥牛",
+             "五花肉炝炒包菜", "砂锅山药", "小炒双味菌", "鱼香肉丝", "鱼香豆腐", "红焖羊排", "酸菜白肉", "毛氏红烧肉", "蒜苔炒肉丝",
+             "茭白炒牛肉丝", "剁椒青豆肉末", "枸杞叶猪肝汤", "豆豉鲮鱼油麦菜", "番茄牛腩", "山药龙骨汤"]
+spu_col = tf.feature_column.categorical_column_with_vocabulary_list(key="spu_name",
+                                                                    vocabulary_list=spu_vocab)
 spu_emb_col = tf.feature_column.embedding_column(spu_col, 10)
 spu_ind_col = tf.feature_column.indicator_column(spu_col)       # spu id indicator columns
 
@@ -192,21 +160,22 @@ cuisines_genre_emb_col = tf.feature_column.embedding_column(cuisines_genre_col, 
 cuisines_genre_ind_col = tf.feature_column.indicator_column(cuisines_genre_col) # user genre indicator columns
 
 # item genre embedding feature
-gender_genre_col = tf.feature_column.categorical_column_with_identity(key="user_gender", vocabulary_list=2)
-gender_genre_emb_col = gender_genre_col
+gender_genre_col = tf.feature_column.categorical_column_with_identity(key="user_gender", num_buckets=10)
+# gender_genre_emb_col = gender_genre_col
+# gender_genre_emb_col = tf.feature_column.embedding_column(gender_genre_col, 2)
 gender_genre_ind_col = tf.feature_column.indicator_column(gender_genre_col)     # item genre indicator columns
 
 # ========================================================================================================
 # fm first-order term columns: without embedding and concatenate to the output layer directly
 # fm_first_order_columns = [movie_ind_col, user_ind_col, user_genre_ind_col, item_genre_ind_col]
-fm_first_order_columns = [spu_col, user_ind_col, cuisines_genre_ind_col, gender_genre_ind_col]
+fm_first_order_columns = [spu_ind_col, user_ind_col, cuisines_genre_ind_col, gender_genre_ind_col]
 
 
 spu_emb_layer = tf.keras.layers.DenseFeatures([spu_emb_col])(inputs)
 user_emb_layer = tf.keras.layers.DenseFeatures([user_emb_col])(inputs)
 cuisines_genre_emb_layer = tf.keras.layers.DenseFeatures([cuisines_genre_emb_col])(inputs)
-gender_genre_emb_layer = tf.keras.layers.DenseFeatures([gender_genre_emb_col])(inputs)
-
+# gender_genre_emb_layer = tf.keras.layers.DenseFeatures([gender_genre_emb_col])(inputs)
+gender_genre_emb_layer = tf.keras.layers.DenseFeatures([gender_genre_ind_col])(inputs)
 
 # The first-order term in the FM layer
 fm_first_order_layer = tf.keras.layers.DenseFeatures(fm_first_order_columns)(inputs)
