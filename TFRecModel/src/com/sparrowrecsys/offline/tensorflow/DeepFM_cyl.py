@@ -189,33 +189,6 @@ def DeepFM():
     model = tf.keras.Model(inputs, output_layer)
     return model
 
-# # ========================================================================================================
-# model = tf.keras.Model(inputs, output_layer)
-#
-# # ========================================================================================================
-# # compile the model, set loss function, optimizer and evaluation metrics
-# model.compile(
-#     loss='binary_crossentropy',
-#     optimizer='adam',
-#     metrics=['accuracy', tf.keras.metrics.AUC(curve='ROC'), tf.keras.metrics.AUC(curve='PR')])
-#
-# # ========================================================================================================
-# # train the model
-# model.fit(train_dataset, epochs=5)
-#
-# # ========================================================================================================
-# # evaluate the model
-# test_loss, test_accuracy, test_roc_auc, test_pr_auc = model.evaluate(test_dataset)
-# print('\n\nTest Loss {}, Test Accuracy {}, Test ROC AUC {}, Test PR AUC {}'.format(test_loss, test_accuracy,
-#                                                                                    test_roc_auc, test_pr_auc))
-# # ========================================================================================================
-# # print some predict results
-# predictions = model.predict(test_dataset)
-# for prediction, goodRating in zip(predictions[:12], list(test_dataset)[0][1][:12]):
-#     print("Predicted good rating: {:.2%}".format(prediction[0]),
-#           " | Actual rating label: ",
-#           ("Good Rating" if bool(goodRating) else "Bad Rating"))
-
 
 def parse_argvs():
     parser = argparse.ArgumentParser(description='[DeepFM]')
@@ -224,6 +197,7 @@ def parse_argvs():
     parser.add_argument("--test_data", type=str,
                         default="file:///data1/caiyueliang/data/user_goods_data_test_2022-05-05.csv")
     parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--epochs", type=int, default=5)
     args = parser.parse_args()
     print('[input params] {}'.format(args))
 
@@ -235,6 +209,7 @@ if __name__ == "__main__":
     train_data = args.train_data
     test_data = args.test_data
     batch_size = args.batch_size
+    epochs = args.epochs
 
     # Training samples path, change to your local path
     training_samples_file_path = tf.keras.utils.get_file(train_data.split("/")[-1], train_data)
@@ -249,23 +224,19 @@ if __name__ == "__main__":
 
     model = DeepFM()
 
-    # ========================================================================================================
     # compile the model, set loss function, optimizer and evaluation metrics
     model.compile(
         loss='binary_crossentropy',
         optimizer='adam',
         metrics=['accuracy', tf.keras.metrics.AUC(curve='ROC'), tf.keras.metrics.AUC(curve='PR')])
 
-    # ========================================================================================================
     # train the model
-    model.fit(train_dataset, epochs=5)
+    model.fit(train_dataset, epochs=epochs)
 
-    # ========================================================================================================
     # evaluate the model
     test_loss, test_accuracy, test_roc_auc, test_pr_auc = model.evaluate(test_dataset)
     print('\n\nTest Loss {}, Test Accuracy {}, Test ROC AUC {}, Test PR AUC {}'.format(test_loss, test_accuracy,
                                                                                        test_roc_auc, test_pr_auc))
-    # ========================================================================================================
     # print some predict results
     predictions = model.predict(test_dataset)
     for prediction, goodRating in zip(predictions[:12], list(test_dataset)[0][1][:12]):
