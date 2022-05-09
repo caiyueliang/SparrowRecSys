@@ -237,9 +237,9 @@ def DeepFM():
 def parse_argvs():
     parser = argparse.ArgumentParser(description='[DeepFM]')
     parser.add_argument("--train_data", type=str,
-                        default="file:///Users/qudian/open/cai/train_data/user_goods_data_train_2022-05-05.csv")
+                        default="file:///data1/caiyueliang/data/user_goods_data_train_2022-05-05.csv")
     parser.add_argument("--test_data", type=str,
-                        default="file:///Users/qudian/open/cai/train_data/user_goods_data_test_2022-05-05.csv")
+                        default="file:///data1/caiyueliang/data/user_goods_data_test_2022-05-05.csv")
     args = parser.parse_args()
     print('[input params] {}'.format(args))
 
