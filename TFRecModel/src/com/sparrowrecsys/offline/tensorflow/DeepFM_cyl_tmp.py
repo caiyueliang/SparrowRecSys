@@ -9,7 +9,7 @@ def get_dataset(file_path, batch_size=12):
         file_path,
         batch_size=batch_size,
         label_name='label',
-        # na_value="0",
+        na_value="0",
         num_epochs=1,
         field_delim="\t",
         ignore_errors=True)
@@ -229,14 +229,12 @@ if __name__ == "__main__":
         metrics=['accuracy', tf.keras.metrics.AUC(curve='ROC'), tf.keras.metrics.AUC(curve='PR')])
 
     # train the model
+    model.fit(train_dataset, epochs=epochs)
 
-    for i in range(epochs):
-        model.fit(train_dataset, epochs=1)
-
-        # evaluate the model
-        test_loss, test_accuracy, test_roc_auc, test_pr_auc = model.evaluate(test_dataset)
-        print('\nTest Loss {:.4}, Test Accuracy {:.4}, Test ROC AUC {:.4}, Test PR AUC {:.4}'.format(
-            test_loss, test_accuracy, test_roc_auc, test_pr_auc))
+    # evaluate the model
+    test_loss, test_accuracy, test_roc_auc, test_pr_auc = model.evaluate(test_dataset)
+    print('\nTest Loss {:.4}, Test Accuracy {:.4}, Test ROC AUC {:.4}, Test PR AUC {:.4}'.format(
+        test_loss, test_accuracy, test_roc_auc, test_pr_auc))
 
     # print some predict results
     predictions = model.predict(test_dataset)
