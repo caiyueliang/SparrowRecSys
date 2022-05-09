@@ -223,7 +223,7 @@ def parse_argvs():
                         default="file:///data1/caiyueliang/data/user_goods_data_train_2022-05-05.csv")
     parser.add_argument("--test_data", type=str,
                         default="file:///data1/caiyueliang/data/user_goods_data_test_2022-05-05.csv")
-    parser.add_argument("--batch_size", type=int, default=48)
+    parser.add_argument("--batch_size", type=int, default=128)
     args = parser.parse_args()
     print('[input params] {}'.format(args))
 
