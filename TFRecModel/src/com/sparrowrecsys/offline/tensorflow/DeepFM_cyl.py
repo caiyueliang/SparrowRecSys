@@ -16,7 +16,7 @@ def get_dataset(file_path, batch_size=12):
     return dataset
 
 
-def DeepFM():
+def DeepFM(drop_rate=0.2):
     # define input for keras model
     # user_id	sku_id	spu_id	spu_name
     # dinner_time_type	food_cook_type	goods_type	sku_valid_days	sku_line_price	sku_sale_price	sku_point_cnt	sku_spec
@@ -148,10 +148,15 @@ def DeepFM():
 
     # ========================================================================================================
     # The first-order term in the FM layer
-    fm_first_order_columns = [spu_ind_col, user_ind_col, cuisines_genre_ind_col, gender_genre_ind_col,
+    fm_first_order_columns = [spu_ind_col,
+                              user_ind_col,
+                              cuisines_genre_ind_col,
+                              gender_genre_ind_col,
                               meat_type_genre_ind_col]
     fm_first_order_layer = tf.keras.layers.DenseFeatures(fm_first_order_columns)(inputs)
+    fm_first_order_layer = tf.keras.layers.Dropout(drop_rate)(fm_first_order_layer)
 
+    # ========================================================================================================
     spu_emb_layer = tf.keras.layers.DenseFeatures([spu_emb_col])(inputs)
     user_emb_layer = tf.keras.layers.DenseFeatures([user_emb_col])(inputs)
     cuisines_genre_emb_layer = tf.keras.layers.DenseFeatures([cuisines_genre_emb_col])(inputs)
@@ -166,6 +171,13 @@ def DeepFM():
     product_layer_cuisines_genre_gender_genre = tf.keras.layers.Dot(axes=1)([cuisines_genre_emb_layer, gender_genre_emb_layer])
     product_layer_meat_type_genre_gender_genre = tf.keras.layers.Dot(axes=1)([meat_type_genre_emb_layer, gender_genre_emb_layer])
 
+    product_layer_spu_user = tf.keras.layers.Dropout(drop_rate)(product_layer_spu_user)
+    product_layer_spu_gender_genre = tf.keras.layers.Dropout(drop_rate)(product_layer_spu_gender_genre)
+    product_layer_user_cuisines_genre = tf.keras.layers.Dropout(drop_rate)(product_layer_user_cuisines_genre)
+    product_layer_user_meat_type_genre = tf.keras.layers.Dropout(drop_rate)(product_layer_user_meat_type_genre)
+    product_layer_cuisines_genre_gender_genre = tf.keras.layers.Dropout(drop_rate)(product_layer_cuisines_genre_gender_genre)
+    product_layer_meat_type_genre_gender_genre = tf.keras.layers.Dropout(drop_rate)(product_layer_meat_type_genre_gender_genre)
+    
     # ========================================================================================================
     # deep part, MLP to generalize all input features
 
@@ -177,10 +189,11 @@ def DeepFM():
                             user_emb_col]
 
     deep = tf.keras.layers.DenseFeatures(deep_feature_columns)(inputs)
-    deep = tf.keras.layers.Dropout(0.2)(deep)
+    deep = tf.keras.layers.Dropout(drop_rate)(deep)
     deep = tf.keras.layers.Dense(64, activation='relu')(deep)
-    deep = tf.keras.layers.Dropout(0.2)(deep)
+    deep = tf.keras.layers.Dropout(drop_rate)(deep)
     deep = tf.keras.layers.Dense(64, activation='relu')(deep)
+    deep = tf.keras.layers.Dropout(drop_rate)(deep)
 
     # ========================================================================================================
     # concatenate fm part and deep part
