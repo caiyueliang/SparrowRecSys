@@ -161,15 +161,26 @@ inputs = {
 #     'movieGenre3': tf.keras.layers.Input(name='movieGenre3', shape=(), dtype='string'),
 # }
 
+# # movie id embedding feature
+# movie_col = tf.feature_column.categorical_column_with_identity(key='movieId', num_buckets=1001)
+# movie_emb_col = tf.feature_column.embedding_column(movie_col, 10)
+# movie_ind_col = tf.feature_column.indicator_column(movie_col) # movid id indicator columns
+#
+# # user id embedding feature
+# user_col = tf.feature_column.categorical_column_with_identity(key='userId', num_buckets=30001)
+# user_emb_col = tf.feature_column.embedding_column(user_col, 10)
+# user_ind_col = tf.feature_column.indicator_column(user_col) # user id indicator columns
+
 # movie id embedding feature
-movie_col = tf.feature_column.categorical_column_with_identity(key='movieId', num_buckets=1001)
+movie_col = tf.feature_column.categorical_column_with_identity(key='spu_name', num_buckets=100)
 movie_emb_col = tf.feature_column.embedding_column(movie_col, 10)
 movie_ind_col = tf.feature_column.indicator_column(movie_col) # movid id indicator columns
 
 # user id embedding feature
-user_col = tf.feature_column.categorical_column_with_identity(key='userId', num_buckets=30001)
+user_col = tf.feature_column.categorical_column_with_identity(key='user_id', num_buckets=312000)
 user_emb_col = tf.feature_column.embedding_column(user_col, 10)
 user_ind_col = tf.feature_column.indicator_column(user_col) # user id indicator columns
+
 
 # genre features vocabulary
 genre_vocab = ['Film-Noir', 'Action', 'Adventure', 'Horror', 'Romance', 'War', 'Comedy', 'Western', 'Documentary',
