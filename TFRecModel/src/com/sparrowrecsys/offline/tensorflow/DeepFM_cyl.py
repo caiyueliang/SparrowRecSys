@@ -298,3 +298,10 @@ if __name__ == "__main__":
         print("Predicted good rating: {:.2%}".format(prediction[0]),
               " | Actual rating label: ",
               ("Good Rating" if bool(goodRating) else "Bad Rating"))
+
+    model.summary()
+
+    tf.compat.v1.saved_model.save(
+        obj=model,
+        export_dir='./export_model/{}-{}/{}'.format("test", "DeepFM", 1),
+        signatures=None)
