@@ -187,6 +187,14 @@ def DeepFM():
     output_layer = tf.keras.layers.Dense(1, activation='sigmoid')(concat_layer)
 
     model = tf.keras.Model(inputs, output_layer)
+
+    model.summary()
+
+    tf.compat.v1.saved_model.save(
+        obj=model,
+        export_dir='./export_model/{}-{}/{}'.format("test", "DeepFM", 1),
+        signatures=None)
+
     return model
 
 
