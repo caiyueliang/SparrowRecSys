@@ -71,7 +71,8 @@ def neural_cf_model_2(feature_inputs, item_feature_columns, user_feature_columns
 
 
 # neural cf model architecture
-model = neural_cf_model_1(inputs, [movie_emb_col], [user_emb_col], [10, 10])
+# model = neural_cf_model_1(inputs, [movie_emb_col], [user_emb_col], [10, 10])
+model = neural_cf_model_2(inputs, [movie_emb_col], [user_emb_col], [10, 10])
 
 # compile the model, set loss function, optimizer and evaluation metrics
 model.compile(
